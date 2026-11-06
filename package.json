@@ -1,0 +1,20 @@
+{
+  "name": "thoughtfree-obsidian",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The ThoughtFree plugin for Obsidian.",
+  "license": "MIT",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-transform-types --test test/*.test.ts",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "24.0.0",
+    "esbuild": "0.25.0",
+    "obsidian": "1.12.3",
+    "typescript": "5.8.2"
+  }
+}
