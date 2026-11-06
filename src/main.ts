@@ -11,6 +11,7 @@ import {
   parseYaml,
   requestUrl,
   type EventRef,
+  type SettingDefinitionItem,
 } from "obsidian";
 
 import { Auth, SignInNeeded, type AuthStore, type Pending, type Tokens } from "./auth.ts";
@@ -60,16 +61,6 @@ const DEFAULTS: Saved = {
   categories: [],
 };
 
-/** What this build needs of `app` that the published types may not name yet. */
-type AppExtras = {
-  secretStorage: {
-    getSecret(id: string): string | null;
-    setSecret(id: string, value: string): void;
-  };
-  loadLocalStorage(key: string): string | null;
-  saveLocalStorage(key: string, value: string | null): void;
-};
-
 const http: Http = async (request) => {
   const res = await requestUrl({ ...request, throw: false });
   let json: unknown = null;
@@ -87,10 +78,8 @@ class ObsidianVault implements VaultPort {
   indexNotes(): Map<string, NotePlace> {
     const index = new Map<string, NotePlace>();
     for (const file of this.app.vault.getMarkdownFiles()) {
-      const props = this.app.metadataCache.getFileCache(file)?.frontmatter as
-        | Record<string, unknown>
-        | undefined;
-      const id = props?.thoughtfree_id;
+      const props = this.app.metadataCache.getFileCache(file)?.frontmatter;
+      const id: unknown = props?.thoughtfree_id;
       if (typeof id === "string") {
         index.set(id, {
           path: file.path,
@@ -219,34 +208,30 @@ export default class ThoughtFreePlugin extends Plugin {
   private statusBar: HTMLElement | null = null;
   private tab: ThoughtFreeTab | null = null;
 
-  private get extras(): AppExtras {
-    return this.app as unknown as AppExtras;
-  }
-
   get syncHere(): boolean {
-    return this.extras.loadLocalStorage(THIS_DEVICE_KEY) !== "off";
+    return this.app.loadLocalStorage(THIS_DEVICE_KEY) !== "off";
   }
 
   set syncHere(on: boolean) {
-    this.extras.saveLocalStorage(THIS_DEVICE_KEY, on ? null : "off");
+    this.app.saveLocalStorage(THIS_DEVICE_KEY, on ? null : "off");
   }
 
   private authStore(): AuthStore {
-    const { extras } = this;
+    const { app } = this;
     return {
       loadTokens(): Tokens | null {
-        const raw = extras.secretStorage.getSecret(TOKENS_SECRET);
+        const raw = app.secretStorage.getSecret(TOKENS_SECRET);
         return raw ? (JSON.parse(raw) as Tokens) : null;
       },
       saveTokens(tokens) {
-        extras.secretStorage.setSecret(TOKENS_SECRET, tokens ? JSON.stringify(tokens) : "");
+        app.secretStorage.setSecret(TOKENS_SECRET, tokens ? JSON.stringify(tokens) : "");
       },
       loadPending(): Pending | null {
-        const raw = extras.loadLocalStorage(PENDING_KEY);
+        const raw = app.loadLocalStorage(PENDING_KEY);
         return raw ? (JSON.parse(raw) as Pending) : null;
       },
       savePending(pending) {
-        extras.saveLocalStorage(PENDING_KEY, pending ? JSON.stringify(pending) : null);
+        app.saveLocalStorage(PENDING_KEY, pending ? JSON.stringify(pending) : null);
       },
     };
   }
@@ -432,33 +417,41 @@ class ThoughtFreeTab extends PluginSettingTab {
 
   private pasted = "";
 
-  display(): void {
-    const { containerEl, plugin } = this;
-    containerEl.empty();
+  /** Every row, once: `display` draws them below Obsidian 1.13, and
+   * `getSettingDefinitions` hands the same ones to its settings search. */
+  private rows(): Row[] {
+    const { plugin } = this;
     const saved = plugin.saved;
+    const rows: Row[] = [];
 
     if (plugin.auth.signedIn) {
-      new Setting(containerEl)
-        .setName("Account")
-        .setDesc(plugin.status || lastSyncLine(saved.lastSync))
-        .addButton((b) => b.setButtonText("Sync now").setCta().onClick(() => void plugin.runSync(true)))
-        .addButton((b) => b.setButtonText("Disconnect").onClick(() => void plugin.signOut()));
+      rows.push({
+        name: "Account",
+        desc: plugin.status || lastSyncLine(saved.lastSync),
+        render: (s) => s
+          .addButton((b) => b.setButtonText("Sync now").setCta().onClick(() => void plugin.runSync(true)))
+          .addButton((b) => b.setButtonText("Disconnect").onClick(() => void plugin.signOut())),
+      });
     } else {
-      new Setting(containerEl)
-        .setName("Account")
-        .setDesc("Connect to bring your thoughts into this vault.")
-        .addButton((b) => b.setButtonText("Connect").setCta().onClick(() => void plugin.startSignIn()));
-      new Setting(containerEl)
-        .setName("Sign-in code")
-        .setDesc("If Obsidian did not open after you allowed it, paste the code here.")
-        .addText((t) => t.onChange((v) => (this.pasted = v)))
-        .addButton((b) => b.setButtonText("Use code").onClick(() => void plugin.finishSignIn(this.pasted)));
+      rows.push({
+        name: "Account",
+        desc: "Connect to bring your thoughts into this vault.",
+        render: (s) => s
+          .addButton((b) => b.setButtonText("Connect").setCta().onClick(() => void plugin.startSignIn())),
+      });
+      rows.push({
+        name: "Sign-in code",
+        desc: "If Obsidian did not open after you allowed it, paste the code here.",
+        render: (s) => s
+          .addText((t) => t.onChange((v) => (this.pasted = v)))
+          .addButton((b) => b.setButtonText("Use code").onClick(() => void plugin.finishSignIn(this.pasted))),
+      });
     }
 
-    new Setting(containerEl)
-      .setName("Folder")
-      .setDesc("Thoughts go here, in a folder per category.")
-      .addText((t) =>
+    rows.push({
+      name: "Folder",
+      desc: "Thoughts go here, in a folder per category.",
+      render: (s) => s.addText((t) =>
         t.setValue(saved.root).onChange(async (v) => {
           // A new folder is a new tree: it starts from the beginning, and it
           // is how a vault takes on another account.
@@ -468,60 +461,88 @@ class ThoughtFreeTab extends PluginSettingTab {
           saved.confirmed = false;
           await plugin.save();
         }),
-      );
+      ),
+    });
 
-    new Setting(containerEl)
-      .setName("Sync on this device")
-      .setDesc("Turn off on all but one device if a sync service also copies this vault.")
-      .addToggle((t) => t.setValue(plugin.syncHere).onChange((v) => (plugin.syncHere = v)));
+    rows.push({
+      name: "Sync on this device",
+      desc: "Turn off on all but one device if a sync service also copies this vault.",
+      render: (s) => s.addToggle((t) => t.setValue(plugin.syncHere).onChange((v) => (plugin.syncHere = v))),
+    });
 
-    new Setting(containerEl)
-      .setName("Photos, PDFs and voice clips")
-      .setDesc("Keep a copy in the vault.")
-      .addToggle((t) =>
+    rows.push({
+      name: "Photos, PDFs and voice clips",
+      desc: "Keep a copy in the vault.",
+      render: (s) => s.addToggle((t) =>
         t.setValue(saved.attachments).onChange(async (v) => {
           saved.attachments = v;
           await plugin.save();
         }),
-      );
+      ),
+    });
 
     if (saved.categories.length) {
-      new Setting(containerEl).setName("Categories").setHeading();
+      rows.push({ name: "Categories", render: (s) => s.setHeading() });
       const config: SyncConfig = { root: safeFolder(saved.root, "ThoughtFree"), folders: {}, attachments: false };
       for (const category of [...saved.categories].sort((a, b) => a.label.localeCompare(b.label))) {
         const choice = saved.folders[category.key] ?? {};
-        new Setting(containerEl)
-          .setName(categoryLabel(category.key, saved.categories))
-          .addText((t) =>
-            t
-              .setPlaceholder(folderFor(category.key, saved.categories, config))
-              .setValue(choice.folder ?? "")
-              .onChange(async (v) => {
-                saved.folders[category.key] = { ...saved.folders[category.key], folder: v };
-                await plugin.save();
-              }),
-          )
-          .addToggle((t) =>
-            t
-              .setTooltip("Sync this category")
-              .setValue(!choice.skip)
-              .onChange(async (v) => {
-                saved.folders[category.key] = { ...saved.folders[category.key], skip: !v };
-                // What was skipped went past the cursor, so back to the start.
-                if (v) saved.cursor = "0";
-                await plugin.save();
-              }),
-          );
+        rows.push({
+          name: categoryLabel(category.key, saved.categories),
+          render: (s) => s
+            .addText((t) =>
+              t
+                .setPlaceholder(folderFor(category.key, saved.categories, config))
+                .setValue(choice.folder ?? "")
+                .onChange(async (v) => {
+                  saved.folders[category.key] = { ...saved.folders[category.key], folder: v };
+                  await plugin.save();
+                }),
+            )
+            .addToggle((t) =>
+              t
+                .setTooltip("Sync this category")
+                .setValue(!choice.skip)
+                .onChange(async (v) => {
+                  saved.folders[category.key] = { ...saved.folders[category.key], skip: !v };
+                  // What was skipped went past the cursor, so back to the start.
+                  if (v) saved.cursor = "0";
+                  await plugin.save();
+                }),
+            ),
+        });
       }
     }
 
     if (plugin.auth.signedIn) {
-      new Setting(containerEl)
-        .setName("Resync everything")
-        .setDesc("Reads every thought again. Notes you changed stay as they are.")
-        .addButton((b) => b.setButtonText("Resync").onClick(() => void plugin.resync()));
+      rows.push({
+        name: "Resync everything",
+        desc: "Reads every thought again. Notes you changed stay as they are.",
+        render: (s) => s.addButton((b) => b.setButtonText("Resync").onClick(() => void plugin.resync())),
+      });
     }
+    return rows;
   }
+
+  override getSettingDefinitions(): SettingDefinitionItem[] {
+    return this.rows().map((row) => ({
+      name: row.name,
+      ...(row.desc ? { desc: row.desc } : {}),
+      render: (setting: Setting) => drawRow(setting, row),
+    }));
+  }
+
+  display(): void {
+    this.containerEl.empty();
+    for (const row of this.rows()) drawRow(new Setting(this.containerEl), row);
+  }
+}
+
+type Row = { name: string; desc?: string; render: (setting: Setting) => unknown };
+
+function drawRow(setting: Setting, row: Row): void {
+  setting.setName(row.name);
+  if (row.desc) setting.setDesc(row.desc);
+  row.render(setting);
 }
 
 function lastSyncLine(at: number | null): string {
