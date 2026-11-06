@@ -27,8 +27,6 @@ If a sync service also copies this vault between your devices, turn **Sync on th
 
 **An account is required.** This plugin needs a ThoughtFree account.
 
-**Payment is required for full access.** Syncing is part of ThoughtFree Pro.
-
 **Network use.** The plugin talks to one service, ThoughtFree, at `mcp.thoughtfree.io`, to sign in and to read what changed. Attachments are fetched from ThoughtFree's storage on signed links that last 15 minutes. It contains no telemetry and no ads.
 
 **What it can reach.** Its access is read-only and covers your thoughts, comments, categories and attachments. It never reads your diary, which ThoughtFree's server does not read either.

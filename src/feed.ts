@@ -17,7 +17,7 @@ export type FeedPage = {
 
 /** What a person can act on, as one plain sentence. */
 export class FeedStop extends Error {
-  constructor(message: string, readonly reason: "sign-in" | "pro" | "update" | "later") {
+  constructor(message: string, readonly reason: "sign-in" | "update" | "later") {
     super(message);
   }
 }
@@ -39,8 +39,6 @@ export async function fetchPage(
       break;
     case 401:
       return "expired";
-    case 402:
-      throw new FeedStop("Syncing to Obsidian is part of ThoughtFree Pro.", "pro");
     case 426:
       throw new FeedStop("Update the ThoughtFree plugin to keep syncing.", "update");
     case 429:

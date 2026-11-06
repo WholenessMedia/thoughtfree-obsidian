@@ -345,7 +345,7 @@ test("a token refused twice asks to sign in", async () => {
     (e: unknown) => e instanceof FeedStop && e.reason === "sign-in");
 });
 
-for (const [status, reason] of [[402, "pro"], [426, "update"], [429, "later"], [503, "later"]] as const) {
+for (const [status, reason] of [[426, "update"], [429, "later"], [503, "later"]] as const) {
   test(`a ${status} stops cleanly and writes nothing`, async () => {
     const vault = new FakeVault();
     await assert.rejects(run(vault, async () => jsonResponse(status, {})),
