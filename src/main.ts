@@ -227,7 +227,7 @@ export default class ThoughtFreePlugin extends Plugin {
         app.secretStorage.setSecret(TOKENS_SECRET, tokens ? JSON.stringify(tokens) : "");
       },
       loadPending(): Pending | null {
-        const raw = app.loadLocalStorage(PENDING_KEY);
+        const raw = app.loadLocalStorage(PENDING_KEY) as string | null;
         return raw ? (JSON.parse(raw) as Pending) : null;
       },
       savePending(pending) {
