@@ -1,7 +1,7 @@
 // Regenerates fixtures/notes.json from src/format.ts. Run after a deliberate
 // format change, and copy the file to the app's test/fixtures/.
 import { writeFileSync } from "node:fs";
-import { noteFileName, renderNote } from "./src/format.ts";
+import { NOTE_FORMAT, noteFileName, renderNote } from "./src/format.ts";
 
 const categories = [
   { key: "ideas", label: "Ideas" },
@@ -26,7 +26,11 @@ const cases = [
   ["an event", { ...base, id: "88888888-8888-4888-8888-888888888888", kind: "event", content: "Lunch", event_start: "2026-11-06T12:00:00Z", event_end: "2026-11-06T13:00:00+00:00", event_location: "Vilnius" }],
   ["comments", { ...base, id: "99999999-9999-4999-8999-999999999999", starred: true, comments: [{ id: "c1", content: "first\nreply", created_at: "2026-11-05T10:00:00Z" }] }],
   ["hostile words", { ...base, id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", title: '../../x: "y"', content: "```dataviewjs\ndv.x()\n```\n\n`$= 1`\n\n<% x %>\n\n![p](https://e.example/p.png)\n\n<iframe src=x>" }],
+  ["a birthday", { ...base, id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc", kind: "task", content: "Mum's birthday", due_date: "2026-12-07", recurrence: { freq: "yearly", interval: 1 } }],
+  ["a weekly rule with days and a count", { ...base, id: "dddddddd-dddd-4ddd-8ddd-dddddddddddd", kind: "task", content: "Swim", due_date: "2026-11-09", recurrence: { freq: "weekly", interval: 2, daysOfWeek: [3, 1], endCount: 10 } }],
+  ["a monthly weekday rule with an end", { ...base, id: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee", kind: "task", content: "Book club", due_date: "2026-11-27", recurrence: { freq: "monthly", interval: 1, weekOfMonth: -1, daysOfWeek: [5], endDate: 1830297600000000 } }],
+  ["a rule on the 31st", { ...base, id: "ffffffff-ffff-4fff-8fff-ffffffffffff", kind: "task", content: "Pay rent", due_date: "2026-11-30", recurrence: { freq: "monthly", interval: 1, dayOfMonth: 31, movedFrom: "2026-11-30" } }],
   ["an archived link", { ...base, id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", state: "archived", type: "link", link_url: "https://example.com/a", content: "" }],
 ].map(([name, note]) => ({ name, note, fileName: noteFileName(note), text: renderNote(note, categories) }));
 
-writeFileSync("fixtures/notes.json", `${JSON.stringify({ format: 1, categories, cases }, null, 2)}\n`);
+writeFileSync("fixtures/notes.json", `${JSON.stringify({ format: NOTE_FORMAT, categories, cases }, null, 2)}\n`);

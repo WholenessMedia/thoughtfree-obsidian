@@ -1,4 +1,5 @@
-// The note format, version 1. One thought, one note.
+// The note format, version 2. One thought, one note. Version 2 added
+// `repeat`, the rule in the app's words ("Every year"), after `due`.
 //
 // ⚠️ THIS IS A CONTRACT WITH THE APP. The ThoughtFree app writes the same notes
 // into its vault ZIP (lib/core/export/vault_note.dart there), so both render
@@ -7,7 +8,7 @@
 //
 // Pure, with no Obsidian import, so it runs under `node --test`.
 
-export const NOTE_FORMAT = 1;
+export const NOTE_FORMAT = 2;
 
 export type FeedFile = {
   id: string;
@@ -16,6 +17,19 @@ export type FeedFile = {
   name: string | null;
   size: number | null;
   url: string;
+};
+
+/** A repeat rule as the app stores it (its `RecurrenceConverter` map). Every
+ * field is read leniently: a rule that cannot be read is worded as best it
+ * can be, never an error. */
+export type FeedRecurrence = {
+  freq?: unknown;
+  interval?: unknown;
+  daysOfWeek?: unknown;
+  dayOfMonth?: unknown;
+  weekOfMonth?: unknown;
+  endDate?: unknown;
+  endCount?: unknown;
 };
 
 export type FeedComment = { id: string; content: string; created_at: string };
@@ -33,6 +47,7 @@ export type FeedNote = {
   priority?: string | null;
   status?: string | null;
   due_date?: string | null;
+  recurrence?: FeedRecurrence | null;
   completed_at?: string | null;
   event_start?: string | null;
   event_end?: string | null;
@@ -159,6 +174,61 @@ export function safeTag(raw: string): string | null {
   return /^[0-9/_-]+$/.test(t) ? `t-${t}` : t;
 }
 
+const DAY_LETTERS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+function whole(v: unknown): number | null {
+  return typeof v === "number" && Number.isFinite(v) ? Math.trunc(v) : null;
+}
+
+/** An end date the app would read (`_dateFromMicros`): microseconds, a date,
+ * or a number written as text. Anything else is no end. */
+function readsAsDate(v: unknown): boolean {
+  if (typeof v === "number") return Number.isFinite(v);
+  if (typeof v !== "string") return false;
+  return /^-?\d+$/.test(v.trim()) || !Number.isNaN(Date.parse(v));
+}
+
+function ordinalWord(n: number): string {
+  return n === -1 ? "last" : n === 1 ? "1st" : n === 2 ? "2nd" : n === 3 ? "3rd" : `${n}th`;
+}
+
+/**
+ * How a rule repeats, in the app's words: `Recurrence.label` in
+ * `lib/core/models/thought.dart`, read the way `recurrenceFromPayload` reads
+ * the map. "Every year", "Every 2 weeks · Mo We", "Every month · last Fri".
+ * The fixture holds the two to the same words.
+ */
+export function repeatLabel(rule: FeedRecurrence | null | undefined): string | null {
+  if (!rule || typeof rule !== "object") return null;
+  const units: Record<string, string> = { daily: "day", weekly: "week", monthly: "month", yearly: "year" };
+  const freq = typeof rule.freq === "string" && rule.freq in units ? rule.freq : "daily";
+  const unit = units[freq];
+  const interval = whole(rule.interval) ?? 1;
+  const days = Array.isArray(rule.daysOfWeek)
+    ? rule.daysOfWeek.filter((d): d is number => typeof d === "number").map(Math.trunc)
+    : [];
+  const week = whole(rule.weekOfMonth);
+  const nth = week === -1 || (week !== null && week >= 1 && week <= 4) ? week : null;
+  const dayOfMonth = whole(rule.dayOfMonth);
+  const endCount = whole(rule.endCount);
+
+  let label = interval === 1 ? `Every ${unit}` : `Every ${interval} ${unit}s`;
+  if (freq === "weekly" && days.length) {
+    label = `${label} · ${[...days].sort((a, b) => a - b).map((d) => DAY_LETTERS[d - 1] ?? "").join(" ")}`;
+  }
+  if (freq === "monthly" && nth !== null) {
+    const first = days[0];
+    const day = first === undefined ? undefined : DAY_NAMES[first - 1];
+    label = `${label} · ${ordinalWord(nth)}${day ? ` ${day}` : ""}`;
+  } else if (freq === "monthly" && dayOfMonth !== null) {
+    label = dayOfMonth === 31 ? `${label} · last day` : `${label} · day ${dayOfMonth}`;
+  }
+  if (endCount !== null) label = `${label} · ${endCount}×`;
+  if (readsAsDate(rule.endDate)) label = `${label} · ends`;
+  return label;
+}
+
 function isoSeconds(value: string | null | undefined): string | null {
   if (!value) return null;
   const ms = Date.parse(value);
@@ -256,6 +326,7 @@ export function properties(
   put("created", isoSeconds(note.created_at));
   put("updated", isoSeconds(note.updated_at));
   put("due", note.due_date ? note.due_date.slice(0, 10) : null);
+  put("repeat", repeatLabel(note.recurrence));
   put("done", isoSeconds(note.completed_at));
   put("event_start", isoSeconds(note.event_start));
   put("event_end", isoSeconds(note.event_end));
@@ -270,7 +341,7 @@ export function properties(
 /** The properties a sync owns and a person can change. The state is left out:
  * it moves with Trash, and is never a person's edit. */
 export const MANAGED_PROPERTIES = [
-  "thoughtfree_category", "category", "kind", "tags", "created", "updated", "due", "done",
+  "thoughtfree_category", "category", "kind", "tags", "created", "updated", "due", "repeat", "done",
   "event_start", "event_end", "location", "priority", "starred", "link", "source",
 ];
 

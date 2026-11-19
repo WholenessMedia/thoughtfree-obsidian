@@ -16,10 +16,11 @@ import {
 
 import { Auth, SignInNeeded, type AuthStore, type Pending, type Tokens } from "./auth.ts";
 import { FeedStop } from "./feed.ts";
-import { categoryLabel, fingerprint, safeFolder, splitNote, stampFrontmatter } from "./format.ts";
+import { NOTE_FORMAT, categoryLabel, fingerprint, safeFolder, splitNote, stampFrontmatter } from "./format.ts";
 import type { Http } from "./http.ts";
 import {
   Sync,
+  cursorForFormat,
   folderFor,
   type NotePlace,
   type SyncConfig,
@@ -48,6 +49,8 @@ type Saved = SyncMemory & {
   attachments: boolean;
   confirmed: boolean;
   lastSync: number | null;
+  /** The note format the vault was last brought up to. Absent: format 1. */
+  format?: number;
 };
 
 const DEFAULTS: Saved = {
@@ -237,7 +240,16 @@ export default class ThoughtFreePlugin extends Plugin {
   }
 
   override async onload(): Promise<void> {
-    this.saved = { ...DEFAULTS, ...((await this.loadData()) as Partial<Saved> | null) };
+    const loaded = (await this.loadData()) as Partial<Saved> | null;
+    this.saved = { ...DEFAULTS, ...loaded };
+    // A newer note format goes round the thoughts once more, so notes written
+    // before it gain what it adds (`cursorForFormat`). A new install has
+    // nothing written yet.
+    if (this.saved.format !== NOTE_FORMAT) {
+      this.saved.cursor = cursorForFormat(this.saved.cursor, loaded ? loaded.format : NOTE_FORMAT);
+      this.saved.format = NOTE_FORMAT;
+      await this.save();
+    }
     this.auth = new Auth(
       {
         origin: __TF_ORIGIN__,

@@ -4,7 +4,7 @@ Keep your [ThoughtFree](https://thoughtfree.io) thoughts in your vault, one note
 
 ## What it does
 
-- **One note per thought**, with properties for its category, kind, tags and dates, so Bases and search can read them. A ready-made table view comes with it.
+- **One note per thought**, with properties for its category, kind, tags, dates and how it repeats, so Bases and search can read them. A ready-made table view comes with it.
 - **A folder per category**, chosen by you, or leave a category out.
 - **Your edits win.** Change a note and it stays changed, whatever happens to the thought in the app.
 - **Nothing is ever deleted from your vault.** A thought moved to Trash in ThoughtFree changes one property on its note.

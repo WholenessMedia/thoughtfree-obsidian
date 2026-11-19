@@ -1,5 +1,5 @@
 {
-  "format": 1,
+  "format": 2,
   "categories": [
     {
       "key": "ideas",
@@ -23,7 +23,7 @@
         "id": "11111111-1111-4111-8111-111111111111"
       },
       "fileName": "A plain thought 111111.md",
-      "text": "---\nthoughtfree_id: \"11111111-1111-4111-8111-111111111111\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/11111111-1111-4111-8111-111111111111\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"8ad1ae98687a307c\"\n---\nA plain thought.\n"
+      "text": "---\nthoughtfree_id: \"11111111-1111-4111-8111-111111111111\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/11111111-1111-4111-8111-111111111111\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"8ad1ae98687a307c\"\n---\nA plain thought.\n"
     },
     {
       "name": "a title",
@@ -38,7 +38,7 @@
         "title": "Mano mintis: šiandien"
       },
       "fileName": "Mano mintis šiandien 222222.md",
-      "text": "---\nthoughtfree_id: \"22222222-2222-4222-8222-222222222222\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/22222222-2222-4222-8222-222222222222\"\nthoughtfree_hash: \"b86a4fc6a38c0587\"\nthoughtfree_props: \"13aad7396fbef9fa\"\n---\n# Mano mintis: šiandien\n\nA plain thought.\n"
+      "text": "---\nthoughtfree_id: \"22222222-2222-4222-8222-222222222222\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/22222222-2222-4222-8222-222222222222\"\nthoughtfree_hash: \"b86a4fc6a38c0587\"\nthoughtfree_props: \"13aad7396fbef9fa\"\n---\n# Mano mintis: šiandien\n\nA plain thought.\n"
     },
     {
       "name": "no category",
@@ -52,7 +52,7 @@
         "id": "33333333-3333-4333-8333-333333333333"
       },
       "fileName": "A plain thought 333333.md",
-      "text": "---\nthoughtfree_id: \"33333333-3333-4333-8333-333333333333\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"\"\ncategory: \"Uncategorized\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/33333333-3333-4333-8333-333333333333\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"1ffe7d138cd4e638\"\n---\nA plain thought.\n"
+      "text": "---\nthoughtfree_id: \"33333333-3333-4333-8333-333333333333\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"\"\ncategory: \"Uncategorized\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/33333333-3333-4333-8333-333333333333\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"1ffe7d138cd4e638\"\n---\nA plain thought.\n"
     },
     {
       "name": "a deleted category",
@@ -66,7 +66,7 @@
         "id": "44444444-4444-4444-8444-444444444444"
       },
       "fileName": "A plain thought 444444.md",
-      "text": "---\nthoughtfree_id: \"44444444-4444-4444-8444-444444444444\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"old-key\"\ncategory: \"old-key\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/44444444-4444-4444-8444-444444444444\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"1cf2fac7a4e0f3dc\"\n---\nA plain thought.\n"
+      "text": "---\nthoughtfree_id: \"44444444-4444-4444-8444-444444444444\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"old-key\"\ncategory: \"old-key\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/44444444-4444-4444-8444-444444444444\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"1cf2fac7a4e0f3dc\"\n---\nA plain thought.\n"
     },
     {
       "name": "tags",
@@ -86,7 +86,7 @@
         ]
       },
       "fileName": "A plain thought 555555.md",
-      "text": "---\nthoughtfree_id: \"55555555-5555-4555-8555-555555555555\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ntags:\n  - \"two-words\"\n  - \"t-2026\"\n  - \"ok\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/55555555-5555-4555-8555-555555555555\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"f6a00e9c73369772\"\n---\nA plain thought.\n"
+      "text": "---\nthoughtfree_id: \"55555555-5555-4555-8555-555555555555\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ntags:\n  - \"two-words\"\n  - \"t-2026\"\n  - \"ok\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/55555555-5555-4555-8555-555555555555\"\nthoughtfree_hash: \"58f47b18f3aa0d01\"\nthoughtfree_props: \"f6a00e9c73369772\"\n---\nA plain thought.\n"
     },
     {
       "name": "an open task",
@@ -102,7 +102,7 @@
         "priority": "high"
       },
       "fileName": "Buy milk 666666.md",
-      "text": "---\nthoughtfree_id: \"66666666-6666-4666-8666-666666666666\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndue: \"2026-11-07\"\npriority: \"high\"\nsource: \"https://app.thoughtfree.io/thought/66666666-6666-4666-8666-666666666666\"\nthoughtfree_hash: \"18b50b134c4fd128\"\nthoughtfree_props: \"e7b98abf2abf8eea\"\n---\n- [ ] Buy milk\n\n    semi-skimmed\n"
+      "text": "---\nthoughtfree_id: \"66666666-6666-4666-8666-666666666666\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndue: \"2026-11-07\"\npriority: \"high\"\nsource: \"https://app.thoughtfree.io/thought/66666666-6666-4666-8666-666666666666\"\nthoughtfree_hash: \"18b50b134c4fd128\"\nthoughtfree_props: \"e7b98abf2abf8eea\"\n---\n- [ ] Buy milk\n\n    semi-skimmed\n"
     },
     {
       "name": "a done task",
@@ -117,7 +117,7 @@
         "completed_at": "2026-11-05T12:00:00Z"
       },
       "fileName": "Call Jonas 777777.md",
-      "text": "---\nthoughtfree_id: \"77777777-7777-4777-8777-777777777777\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndone: \"2026-11-05T12:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/77777777-7777-4777-8777-777777777777\"\nthoughtfree_hash: \"80fe5c74a040c165\"\nthoughtfree_props: \"f72a02ec2e65e939\"\n---\n- [x] Call Jonas\n"
+      "text": "---\nthoughtfree_id: \"77777777-7777-4777-8777-777777777777\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndone: \"2026-11-05T12:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/77777777-7777-4777-8777-777777777777\"\nthoughtfree_hash: \"80fe5c74a040c165\"\nthoughtfree_props: \"f72a02ec2e65e939\"\n---\n- [x] Call Jonas\n"
     },
     {
       "name": "an event",
@@ -134,7 +134,7 @@
         "event_location": "Vilnius"
       },
       "fileName": "Lunch 888888.md",
-      "text": "---\nthoughtfree_id: \"88888888-8888-4888-8888-888888888888\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"event\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nevent_start: \"2026-11-06T12:00:00Z\"\nevent_end: \"2026-11-06T13:00:00Z\"\nlocation: \"Vilnius\"\nsource: \"https://app.thoughtfree.io/thought/88888888-8888-4888-8888-888888888888\"\nthoughtfree_hash: \"b007f09e8a9e9ebf\"\nthoughtfree_props: \"c657811e9515b19b\"\n---\nLunch\n"
+      "text": "---\nthoughtfree_id: \"88888888-8888-4888-8888-888888888888\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"event\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nevent_start: \"2026-11-06T12:00:00Z\"\nevent_end: \"2026-11-06T13:00:00Z\"\nlocation: \"Vilnius\"\nsource: \"https://app.thoughtfree.io/thought/88888888-8888-4888-8888-888888888888\"\nthoughtfree_hash: \"b007f09e8a9e9ebf\"\nthoughtfree_props: \"c657811e9515b19b\"\n---\nLunch\n"
     },
     {
       "name": "comments",
@@ -156,7 +156,7 @@
         ]
       },
       "fileName": "A plain thought 999999.md",
-      "text": "---\nthoughtfree_id: \"99999999-9999-4999-8999-999999999999\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nstarred: true\nsource: \"https://app.thoughtfree.io/thought/99999999-9999-4999-8999-999999999999\"\nthoughtfree_hash: \"f8ddb5f60251b3cc\"\nthoughtfree_props: \"f15960231f993e91\"\n---\nA plain thought.\n\n## Comments\n\n- first reply\n"
+      "text": "---\nthoughtfree_id: \"99999999-9999-4999-8999-999999999999\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nstarred: true\nsource: \"https://app.thoughtfree.io/thought/99999999-9999-4999-8999-999999999999\"\nthoughtfree_hash: \"f8ddb5f60251b3cc\"\nthoughtfree_props: \"f15960231f993e91\"\n---\nA plain thought.\n\n## Comments\n\n- first reply\n"
     },
     {
       "name": "hostile words",
@@ -171,7 +171,95 @@
         "title": "../../x: \"y\""
       },
       "fileName": "x y aaaaaa.md",
-      "text": "---\nthoughtfree_id: \"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa\"\nthoughtfree_format: 1\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa\"\nthoughtfree_hash: \"135a7c22853dea42\"\nthoughtfree_props: \"20e8fdd2f05bc7fc\"\n---\n# ../../x: \"y\"\n\n```text\ndv.x()\n```\n\n`​$= 1`\n\n<​% x %>\n\n!​[p](https://e.example/p.png)\n\n<​iframe src=x>\n"
+      "text": "---\nthoughtfree_id: \"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nsource: \"https://app.thoughtfree.io/thought/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa\"\nthoughtfree_hash: \"135a7c22853dea42\"\nthoughtfree_props: \"20e8fdd2f05bc7fc\"\n---\n# ../../x: \"y\"\n\n```text\ndv.x()\n```\n\n`​$= 1`\n\n<​% x %>\n\n!​[p](https://e.example/p.png)\n\n<​iframe src=x>\n"
+    },
+    {
+      "name": "a birthday",
+      "note": {
+        "state": "live",
+        "kind": "task",
+        "content": "Mum's birthday",
+        "category": "ideas",
+        "created_at": "2026-11-05T09:30:00.123+00:00",
+        "updated_at": "2026-11-05T10:00:00+00:00",
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+        "due_date": "2026-12-07",
+        "recurrence": {
+          "freq": "yearly",
+          "interval": 1
+        }
+      },
+      "fileName": "Mum's birthday cccccc.md",
+      "text": "---\nthoughtfree_id: \"cccccccc-cccc-4ccc-8ccc-cccccccccccc\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndue: \"2026-12-07\"\nrepeat: \"Every year\"\nsource: \"https://app.thoughtfree.io/thought/cccccccc-cccc-4ccc-8ccc-cccccccccccc\"\nthoughtfree_hash: \"cab9bed136136a26\"\nthoughtfree_props: \"496f2122c1968882\"\n---\n- [ ] Mum's birthday\n"
+    },
+    {
+      "name": "a weekly rule with days and a count",
+      "note": {
+        "state": "live",
+        "kind": "task",
+        "content": "Swim",
+        "category": "ideas",
+        "created_at": "2026-11-05T09:30:00.123+00:00",
+        "updated_at": "2026-11-05T10:00:00+00:00",
+        "id": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+        "due_date": "2026-11-09",
+        "recurrence": {
+          "freq": "weekly",
+          "interval": 2,
+          "daysOfWeek": [
+            3,
+            1
+          ],
+          "endCount": 10
+        }
+      },
+      "fileName": "Swim dddddd.md",
+      "text": "---\nthoughtfree_id: \"dddddddd-dddd-4ddd-8ddd-dddddddddddd\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndue: \"2026-11-09\"\nrepeat: \"Every 2 weeks · Mo We · 10×\"\nsource: \"https://app.thoughtfree.io/thought/dddddddd-dddd-4ddd-8ddd-dddddddddddd\"\nthoughtfree_hash: \"6cef707a5b7f323a\"\nthoughtfree_props: \"176efd663231a97c\"\n---\n- [ ] Swim\n"
+    },
+    {
+      "name": "a monthly weekday rule with an end",
+      "note": {
+        "state": "live",
+        "kind": "task",
+        "content": "Book club",
+        "category": "ideas",
+        "created_at": "2026-11-05T09:30:00.123+00:00",
+        "updated_at": "2026-11-05T10:00:00+00:00",
+        "id": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+        "due_date": "2026-11-27",
+        "recurrence": {
+          "freq": "monthly",
+          "interval": 1,
+          "weekOfMonth": -1,
+          "daysOfWeek": [
+            5
+          ],
+          "endDate": 1830297600000000
+        }
+      },
+      "fileName": "Book club eeeeee.md",
+      "text": "---\nthoughtfree_id: \"eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndue: \"2026-11-27\"\nrepeat: \"Every month · last Fri · ends\"\nsource: \"https://app.thoughtfree.io/thought/eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee\"\nthoughtfree_hash: \"955e175bf2d93c39\"\nthoughtfree_props: \"555a2bd12190955f\"\n---\n- [ ] Book club\n"
+    },
+    {
+      "name": "a rule on the 31st",
+      "note": {
+        "state": "live",
+        "kind": "task",
+        "content": "Pay rent",
+        "category": "ideas",
+        "created_at": "2026-11-05T09:30:00.123+00:00",
+        "updated_at": "2026-11-05T10:00:00+00:00",
+        "id": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+        "due_date": "2026-11-30",
+        "recurrence": {
+          "freq": "monthly",
+          "interval": 1,
+          "dayOfMonth": 31,
+          "movedFrom": "2026-11-30"
+        }
+      },
+      "fileName": "Pay rent ffffff.md",
+      "text": "---\nthoughtfree_id: \"ffffffff-ffff-4fff-8fff-ffffffffffff\"\nthoughtfree_format: 2\nthoughtfree_state: \"live\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"task\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\ndue: \"2026-11-30\"\nrepeat: \"Every month · last day\"\nsource: \"https://app.thoughtfree.io/thought/ffffffff-ffff-4fff-8fff-ffffffffffff\"\nthoughtfree_hash: \"f59d022115ba59e3\"\nthoughtfree_props: \"26b1f29fa5954417\"\n---\n- [ ] Pay rent\n"
     },
     {
       "name": "an archived link",
@@ -187,7 +275,7 @@
         "link_url": "https://example.com/a"
       },
       "fileName": "Thought bbbbbb.md",
-      "text": "---\nthoughtfree_id: \"bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb\"\nthoughtfree_format: 1\nthoughtfree_state: \"archived\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nlink: \"https://example.com/a\"\nsource: \"https://app.thoughtfree.io/thought/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb\"\nthoughtfree_hash: \"cbf29ce484222325\"\nthoughtfree_props: \"8b7397147893f31a\"\n---\n\n"
+      "text": "---\nthoughtfree_id: \"bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb\"\nthoughtfree_format: 2\nthoughtfree_state: \"archived\"\nthoughtfree_category: \"ideas\"\ncategory: \"Ideas\"\nkind: \"note\"\ncreated: \"2026-11-05T09:30:00Z\"\nupdated: \"2026-11-05T10:00:00Z\"\nlink: \"https://example.com/a\"\nsource: \"https://app.thoughtfree.io/thought/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb\"\nthoughtfree_hash: \"cbf29ce484222325\"\nthoughtfree_props: \"8b7397147893f31a\"\n---\n\n"
     }
   ]
 }

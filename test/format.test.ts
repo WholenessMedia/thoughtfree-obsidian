@@ -13,6 +13,7 @@ import {
   renderBody,
   renderFrontmatter,
   renderNote,
+  repeatLabel,
   safeFolder,
   safeSegment,
   safeTag,
@@ -163,6 +164,7 @@ test("embeds are found by their folder", () => {
 
 test("every property a sync writes and a person can change is in the print", () => {
   const props = properties({ id: "abcdef", state: "live", due_date: "2026-11-07", tags: ["a"], starred: true,
+    recurrence: { freq: "yearly" },
     event_start: "2026-11-07T09:00:00Z", event_end: "2026-11-07T10:00:00Z", event_location: "x", priority: "high",
     link_url: "https://x.example", completed_at: "2026-11-07T09:00:00Z", created_at: "2026-11-07T09:00:00Z",
     updated_at: "2026-11-07T09:00:00Z" }, []);
@@ -185,4 +187,30 @@ test("comments and files have their place", () => {
   };
   assert.equal(renderBody(note, ["ThoughtFree/attachments/a.png"]),
     "words\n\n![[ThoughtFree/attachments/a.png]]\n\n## Comments\n\n- a reply on two lines");
+});
+
+// Format 2: the rule in the app's words (`Recurrence.label`), read as leniently
+// as the app reads the stored map. The fixture holds the two together.
+test("a repeat is worded as the app words it", () => {
+  assert.equal(repeatLabel({ freq: "yearly", interval: 1 }), "Every year");
+  assert.equal(repeatLabel({ freq: "daily", interval: 3 }), "Every 3 days");
+  assert.equal(repeatLabel({ freq: "weekly", daysOfWeek: [7, 1] }), "Every week · Mo Su");
+  assert.equal(repeatLabel({ freq: "monthly", weekOfMonth: 2, daysOfWeek: [2] }), "Every month · 2nd Tue");
+  assert.equal(repeatLabel({ freq: "monthly", weekOfMonth: 5, dayOfMonth: 12 }), "Every month · day 12");
+  assert.equal(repeatLabel({ freq: "monthly", dayOfMonth: 31 }), "Every month · last day");
+  assert.equal(repeatLabel({ freq: "yearly", endCount: 3, endDate: "2030-01-01" }), "Every year · 3× · ends");
+  assert.equal(repeatLabel({ freq: "yearly", endDate: "never" }), "Every year");
+  // An unknown rule reads as daily, as the app's reader does; none is none.
+  assert.equal(repeatLabel({ freq: "hourly" }), "Every day");
+  assert.equal(repeatLabel(null), null);
+  assert.equal(repeatLabel(undefined), null);
+});
+
+test("the repeat sits after the due day, and only when there is one", () => {
+  const birthday = properties({ id: "abcdef", state: "live", kind: "task", due_date: "2026-12-07",
+    recurrence: { freq: "yearly", interval: 1 } }, []);
+  const keys = Object.keys(birthday);
+  assert.equal(birthday.repeat, "Every year");
+  assert.equal(keys.indexOf("repeat"), keys.indexOf("due") + 1);
+  assert.equal("repeat" in properties({ id: "abcdef", state: "live", kind: "task", due_date: "2026-12-07" }, []), false);
 });

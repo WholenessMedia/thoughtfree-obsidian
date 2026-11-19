@@ -16,6 +16,7 @@
 import { FeedStop, fetchPage, type FeedPage } from "./feed.ts";
 import {
   MANAGED_PROPERTIES,
+  NOTE_FORMAT,
   categoryLabel,
   embedsIn,
   fileNameFor,
@@ -75,6 +76,18 @@ export type SyncMemory = {
   account: string | null;
   categories: FeedCategory[];
 };
+
+/**
+ * Where a sync starts once this plugin writes a newer note format than the
+ * one the vault was last brought up to ([written], absent before format 2).
+ * From the beginning, once: a note changes only when its thought does, so a
+ * birthday written by format 1 would never gain the `repeat` format 2 adds.
+ * Going round again is safe: every write is the same write, a note that
+ * already matches is left as it is, and a person's note is never touched.
+ */
+export function cursorForFormat(cursor: string, written: number | undefined): string {
+  return (written ?? 1) < NOTE_FORMAT ? "0" : cursor;
+}
 
 export type SyncResult = {
   created: number;

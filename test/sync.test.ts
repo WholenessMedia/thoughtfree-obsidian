@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { baseFile, folderFor, notePath, Sync, type SyncConfig, type SyncMemory } from "../src/sync.ts";
+import { baseFile, cursorForFormat, folderFor, notePath, Sync, type SyncConfig, type SyncMemory } from "../src/sync.ts";
 import { fingerprint, splitNote, type FeedNote } from "../src/format.ts";
 import type { FeedPage } from "../src/feed.ts";
 import { FeedStop } from "../src/feed.ts";
@@ -422,4 +422,28 @@ test("the view ships once, then it is the person's", async () => {
   vault.files.set("ThoughtFree/ThoughtFree.base", "mine");
   await run(vault, feed([{ notes: [] }]));
   assert.equal(vault.files.get("ThoughtFree/ThoughtFree.base"), "mine");
+});
+
+// Format 2 added `repeat`. A note changes only when its thought does, so a
+// birthday written by 1.0.3 would never gain it without one more pass.
+test("a newer note format starts once from the beginning", () => {
+  assert.equal(cursorForFormat("812", undefined), "0", "a vault from before format 2");
+  assert.equal(cursorForFormat("812", 1), "0");
+  assert.equal(cursorForFormat("812", 2), "812", "already brought up to it");
+});
+
+test("the pass adds the repeat to a note written without it, and leaves the rest", async () => {
+  const vault = new FakeVault();
+  const birthday = thought("b1", { kind: "task", content: "Mum's birthday", due_date: "2026-12-07" });
+  await run(vault, feed([{ notes: [birthday, thought("n1")] }]));
+  const path = [...vault.files.keys()].find((p) => p.includes("b1"))!;
+  const plain = [...vault.files.keys()].find((p) => p.includes("n1"))!;
+  assert.equal(vault.files.get(path)!.includes("repeat:"), false);
+  const before = vault.files.get(plain);
+
+  await run(vault, feed([{ notes: [{ ...birthday, recurrence: { freq: "yearly", interval: 1 } }, thought("n1")] }]));
+  // Added to a note that exists, a property lands at the end of the block,
+  // as Obsidian's own frontmatter write puts it.
+  assert.match(vault.files.get(path)!, /\nrepeat: "Every year"\n/);
+  assert.equal(vault.files.get(plain), before);
 });
